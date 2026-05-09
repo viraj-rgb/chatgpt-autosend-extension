@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+  ChatGPT Auto-Send — generate_icons.html
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Open this file in any browser (File → Open, or drag-and-drop into tab).
+  Click "Download All Icons" — it will save icon16.png, icon48.png, icon128.png.
+  Place those three files in the  icons/  folder beside manifest.json.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Generate Icons — ChatGPT Auto-Send</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background:#1a1a1a; color:#ececf1;
+           display:flex; flex-direction:column; align-items:center; padding:40px 20px; gap:24px; }
+    h1   { font-size:18px; font-weight:600; }
+    p    { color:#8e8ea0; font-size:13px; text-align:center; max-width:380px; }
+    .canvases { display:flex; gap:24px; align-items:flex-end; flex-wrap:wrap; justify-content:center; }
+    .canvas-wrap { display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .canvas-wrap span { font-size:11px; color:#8e8ea0; }
+    canvas { border-radius:6px; image-rendering:pixelated; }
+    button { padding:11px 28px; background:#10a37f; color:#fff; border:none; border-radius:8px;
+             font-size:14px; font-weight:600; cursor:pointer; }
+    button:hover { background:#0d8c6b; }
+  </style>
+</head>
+<body>
+  <h1>ChatGPT Auto-Send — Icon Generator</h1>
+  <p>Preview below. Click the button to download all three icon sizes into your <code>icons/</code> folder.</p>
+
+  <div class="canvases">
+    <div class="canvas-wrap"><canvas id="c16"  width="16"  height="16" ></canvas><span>16×16</span></div>
+    <div class="canvas-wrap"><canvas id="c48"  width="48"  height="48" ></canvas><span>48×48</span></div>
+    <div class="canvas-wrap"><canvas id="c128" width="128" height="128"></canvas><span>128×128</span></div>
+  </div>
+
+  <button onclick="downloadAll()">⬇ Download All Icons</button>
+
+  <script>
+  // ── Draw the icon at any square size ──────────────────────────────────────
+  function drawIcon(canvas) {
+    const s   = canvas.width;          // side length
+    const ctx = canvas.getContext('2d');
+    const cx  = s / 2, cy = s / 2;
+    const r   = s * 0.38;              // ring radius
+    const lw  = Math.max(1, s * 0.075);
+
+    ctx.clearRect(0, 0, s, s);
+
+    // ── Background rounded square ──────────────────────────────────────────
+    const grad = ctx.createLinearGradient(0, 0, s, s);
+    grad.addColorStop(0, '#1a1a1a');
+    grad.addColorStop(1, '#2a2a2a');
+
+    const rad = s * 0.2;
+    ctx.beginPath();
+    ctx.moveTo(rad, 0);
+    ctx.lineTo(s - rad, 0);
+    ctx.quadraticCurveTo(s, 0, s, rad);
+    ctx.lineTo(s, s - rad);
+    ctx.quadraticCurveTo(s, s, s - rad, s);
+    ctx.lineTo(rad, s);
+    ctx.quadraticCurveTo(0, s, 0, s - rad);
+    ctx.lineTo(0, rad);
+    ctx.quadraticCurveTo(0, 0, rad, 0);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // ── Dashed ring ────────────────────────────────────────────────────────
+    ctx.save();
+    ctx.setLineDash([s * 0.15, s * 0.08]);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(16,163,127,0.55)';
+    ctx.lineWidth   = lw;
+    ctx.stroke();
+    ctx.restore();
+
+    // ── Checkmark / send arrow ─────────────────────────────────────────────
+    const pad = s * 0.26;
+    ctx.beginPath();
+    ctx.moveTo(pad, cy);
+    ctx.lineTo(cx - s * 0.02, cy + s * 0.16);
+    ctx.lineTo(s - pad, cy - s * 0.16);
+    ctx.strokeStyle  = '#10a37f';
+    ctx.lineWidth    = lw * 1.3;
+    ctx.lineCap      = 'round';
+    ctx.lineJoin     = 'round';
+    ctx.setLineDash([]);
+    ctx.stroke();
+  }
+
+  // ── Draw all three on load ─────────────────────────────────────────────────
+  ['c16','c48','c128'].forEach(id => drawIcon(document.getElementById(id)));
+
+  // ── Download helper ────────────────────────────────────────────────────────
+  function download(canvas, filename) {
+    const a = document.createElement('a');
+    a.href     = canvas.toDataURL('image/png');
+    a.download = filename;
+    a.click();
+  }
+
+  function downloadAll() {
+    download(document.getElementById('c16'),  'icon16.png');
+    download(document.getElementById('c48'),  'icon48.png');
+    download(document.getElementById('c128'), 'icon128.png');
+  }
+  </script>
+</body>
+</html>

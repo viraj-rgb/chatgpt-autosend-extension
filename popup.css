@@ -1,0 +1,74 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  width: 292px;
+  margin: 0;
+  background: #202123;
+  color: #ececf1;
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  color: #10a37f;
+  background: rgba(16, 163, 127, 0.14);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-name {
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.logo-sub,
+.popup-footer {
+  color: #a7a7b3;
+  font-size: 11px;
+}
+
+.popup-body {
+  padding: 14px 15px 15px;
+}
+
+.popup-body p {
+  margin: 0 0 12px;
+  color: #d6d6df;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 18px;
+  color: #c7c7d1;
+}
+
+.steps li + li {
+  margin-top: 7px;
+}
+
+.popup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
